@@ -1,0 +1,16 @@
+[project]
+name = "sulphur-2-base-local"
+version = "0.1.0"
+description = "Local Apple Silicon MLX launcher and GUI for SulphurAI/Sulphur-2-base via MLXBits weights"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
+
+[dependency-groups]
+dev = [
+  "ruff>=0.15.9",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"

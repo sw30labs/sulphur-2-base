@@ -1,0 +1,24 @@
+.DS_Store
+.venv/
+.cache/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+
+# Runtime checkout managed by install.sh
+runtime/
+runtime/ltx-2-mlx/
+
+# Heavy model downloads and generated output
+models/*
+!models/README.md
+output/*
+!output/gui/
+output/gui/*
+!output/gui/.gitignore
+
+# Local app state
+.env
+.gradio
+*.log

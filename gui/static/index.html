@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sulphur 2 MLX</title>
+    <link rel="stylesheet" href="/static/styles.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Sulphur 2 / MLX</p>
+          <h1>Local Video Generator</h1>
+        </div>
+        <div class="system-pill" id="serverState">Ready</div>
+      </header>
+
+      <section class="workspace">
+        <form class="control-panel" id="generateForm">
+          <section class="prompt-bank" aria-label="Prompt starters">
+            <span class="field-label">Prompt Starters</span>
+            <div class="prompt-buttons">
+              <button type="button" data-prompt="A handheld cinematic shot of a neon street market at night, rain glistens on umbrellas, low synth hum, distant traffic, slow dolly forward.">Neon Market</button>
+              <button type="button" data-prompt="A close-up product shot of a glass perfume bottle on black marble, golden rim light, soft smoke curls, subtle orchestral shimmer.">Product Shot</button>
+              <button type="button" data-prompt="A surreal fashion film in a desert observatory, silk fabric moves in wind, stars rotate above, deep ambient bass and quiet footsteps.">Desert Fashion</button>
+              <button type="button" data-prompt="A miniature city made of circuit boards wakes up at sunrise, tiny trains move between glowing towers, macro lens, precise camera pan.">Circuit City</button>
+              <button type="button" data-prompt="A documentary-style shot of a chef plating luminous noodles in a tiny Tokyo kitchen, steam rises, knife taps, warm tungsten light.">Tokyo Kitchen</button>
+              <button type="button" data-prompt="A music-video shot of a drummer in a flooded warehouse, strobes reflect in water, thunderous tom hits, slow orbiting camera.">Flooded Drums</button>
+            </div>
+          </section>
+
+          <label class="field field-prompt">
+            <span>Prompt</span>
+            <textarea id="prompt" rows="6" spellcheck="true">A handheld cinematic shot of a neon street market at night, rain glistens on umbrellas, low synth hum, distant traffic, slow dolly forward.</textarea>
+          </label>
+
+          <label class="field">
+            <span>Reference Image Path</span>
+            <input id="imagePath" type="text" placeholder="/Users/spider/Desktop/reference.png">
+          </label>
+
+          <div class="grid three">
+            <label class="field">
+              <span>Width</span>
+              <select id="width">
+                <option value="384">384</option>
+                <option value="512" selected>512</option>
+                <option value="640">640</option>
+                <option value="704">704</option>
+                <option value="768">768</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Height</span>
+              <select id="height">
+                <option value="256">256</option>
+                <option value="320" selected>320</option>
+                <option value="384">384</option>
+                <option value="448">448</option>
+                <option value="512">512</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Frames</span>
+              <select id="frames">
+                <option value="49">49</option>
+                <option value="65" selected>65</option>
+                <option value="81">81</option>
+                <option value="97">97</option>
+                <option value="121">121</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="grid three">
+            <label class="field">
+              <span>Stage 1</span>
+              <input id="stage1Steps" type="number" min="1" max="50" step="1" value="8">
+            </label>
+            <label class="field">
+              <span>Stage 2</span>
+              <input id="stage2Steps" type="number" min="1" max="20" step="1" value="3">
+            </label>
+            <label class="field">
+              <span>FPS</span>
+              <input id="frameRate" type="number" min="1" max="60" step="1" value="24">
+            </label>
+          </div>
+
+          <div class="grid two">
+            <label class="toggle-field">
+              <input id="lowRam" type="checkbox" checked>
+              <span>Low RAM</span>
+            </label>
+            <label class="toggle-field">
+              <input id="enhancePrompt" type="checkbox">
+              <span>Enhance</span>
+            </label>
+          </div>
+
+          <div class="seed-row">
+            <label class="field">
+              <span>Seed</span>
+              <input id="seed" type="number" min="-1" max="2147483647" value="-1">
+            </label>
+            <button class="icon-button" type="button" id="randomSeed" title="Random seed" aria-label="Random seed">#</button>
+            <button class="primary-button" type="submit" id="generateButton">Generate</button>
+          </div>
+        </form>
+
+        <section class="output-panel">
+          <div class="meter-head">
+            <div>
+              <p class="eyebrow">Output</p>
+              <h2 id="outputTitle">No render yet</h2>
+            </div>
+            <span id="runtime">Idle</span>
+          </div>
+
+          <div class="video-stage">
+            <video id="player" controls playsinline preload="metadata"></video>
+          </div>
+
+          <div class="actions">
+            <a class="secondary-button disabled" id="downloadLink" href="#" download>Download MP4</a>
+            <button class="secondary-button" type="button" id="refreshHistory">Refresh</button>
+          </div>
+
+          <pre id="log" class="log" aria-live="polite">Waiting for a generation.</pre>
+        </section>
+      </section>
+
+      <section class="history-band">
+        <div class="history-head">
+          <h2>Recent Renders</h2>
+          <span id="rootPath"></span>
+        </div>
+        <div id="history" class="history-list"></div>
+      </section>
+    </main>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>
